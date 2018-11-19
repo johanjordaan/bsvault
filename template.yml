@@ -34,7 +34,7 @@ Resources:
             Path: /
             Method: get
 
-  ListRosters:
+  GetRosters:
     Type: AWS::Serverless::Function
     Properties:
       Handler: roster.get
@@ -48,3 +48,19 @@ Resources:
           Properties:
             Path: /roster
             Method: get
+
+
+  PostRoster:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: roster.post
+      Runtime: nodejs8.10
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /roster
+            Method: post
