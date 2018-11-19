@@ -12,3 +12,15 @@ exports.get = function(event, context, callback) {
 
   callback(null, result);
 };
+
+exports.post = function(event, context, callback) {
+  console.log(event)
+
+  var result = {
+    statusCode: 200,
+    body: JSON.stringify({all:"ok"}),
+    headers: {'content-type': 'application/json'}
+  };
+
+  callback(null, result);
+};
