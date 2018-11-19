@@ -19,7 +19,7 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  GetHelloWorld:
+  Start:
     Type: AWS::Serverless::Function
     Properties:
       Handler: index.get
@@ -31,5 +31,20 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /xxx
+            Path: /
+            Method: get
+
+  ListRosters:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: roster.get
+      Runtime: nodejs8.10
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /roster
             Method: get
