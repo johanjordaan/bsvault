@@ -16,7 +16,7 @@ exports.create = function(event, context, callback) {
 exports.view = function(event, context, callback) {
   var result = {
     statusCode: 200,
-    body: JSON.stringify({all:"ok",event}),
+    body: JSON.stringify({all:"ok",id:event.pathParameters.id}),
     headers: {'content-type': 'application/json'}
   };
 
