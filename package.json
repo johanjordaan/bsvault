@@ -8,9 +8,9 @@
         "unit.js": "2.0.0"
     },
     "dependencies": {
-      "react": "^16.6.3",
-      "react-dom": "^16.6.3",
-      "react-scripts": "2.1.1"
+        "react": "^16.6.3",
+        "react-dom": "^16.6.3",
+        "react-scripts": "2.1.1"
     },
     "scripts": {
         "test": "mocha --recursive tests",
@@ -20,12 +20,12 @@
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
-      "extends": "react-app"
+        "extends": "react-app"
     },
     "browserslist": [
-      ">0.2%",
-      "not dead",
-      "not ie <= 11",
-      "not op_mini all"
+        ">0.2%",
+        "not dead",
+        "not ie <= 11",
+        "not op_mini all"
     ]
 }
