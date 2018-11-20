@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 
-exports.get = function(event, context, callback) {
+exports.create = function(event, context, callback) {
   var result = {
     statusCode: 200,
     body: JSON.stringify(['Hallo','world']),
@@ -13,12 +13,10 @@ exports.get = function(event, context, callback) {
   callback(null, result);
 };
 
-exports.post = function(event, context, callback) {
-  console.log(event)
-
+exports.view = function(event, context, callback) {
   var result = {
     statusCode: 200,
-    body: JSON.stringify({all:"ok"}),
+    body: JSON.stringify({all:"ok",event}),
     headers: {'content-type': 'application/json'}
   };
 

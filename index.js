@@ -3,7 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 
-exports.get = function(event, context, callback) {
+exports.index = function(event, context, callback) {
   var contents = fs.readFileSync(`public${path.sep}index.html`);
   var result = {
     statusCode: 200,

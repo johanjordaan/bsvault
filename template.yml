@@ -19,10 +19,10 @@ Parameters:
 #       Type: Canary10Percent5Minutes
 
 Resources:
-  Start:
+  Index:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: index.get
+      Handler: index.index
       Runtime: nodejs8.10
       Role:
         Fn::ImportValue:
@@ -34,26 +34,10 @@ Resources:
             Path: /
             Method: get
 
-  GetRosters:
+  CreateRoster:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: roster.get
-      Runtime: nodejs8.10
-      Role:
-        Fn::ImportValue:
-          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
-      Events:
-        GetEvent:
-          Type: Api
-          Properties:
-            Path: /roster
-            Method: get
-
-
-  PostRoster:
-    Type: AWS::Serverless::Function
-    Properties:
-      Handler: roster.post
+      Handler: roster.create
       Runtime: nodejs8.10
       Role:
         Fn::ImportValue:
@@ -64,3 +48,18 @@ Resources:
           Properties:
             Path: /roster
             Method: post
+
+  ViewRoster:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: roster.view
+      Runtime: nodejs8.10
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /roster/{id}
+            Method: get
