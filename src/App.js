@@ -11,19 +11,50 @@ class App extends Component {
   }
 
   componentDidMount() {
-    debugger
     fetch('https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/xxx')
-     .then(response => {
-       const x = response.json()
-       debugger
-       return x
-     })
+     .then(response => response.json())
      .then(data => this.setState({ data }))
-     .catch(err=>{
-       debugger
-     })
   }
 
+
+  handleselectedFile = event => {
+      this.setState({
+        selectedFile: event.target.files[0],
+        loaded: 0,
+      })
+    }
+
+    handleUpload = () => {
+        const data = new FormData()
+        data.append('file', this.state.selectedFile, this.state.selectedFile.name)
+
+        fetch('https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster',{
+          method:'POST',
+          body:data
+        })
+          .then(response => response.json())
+          .then(data => this.setState({ data }))
+          .catch(err=>{
+            console.log(err)
+            alert(err)
+          })
+
+
+        console.log(this.state.selectedFile)
+        alert(this.state.selectedFile,this.state.selectedFile.name)
+        //axios
+        //  .post(endpoint, data, {
+        //    onUploadProgress: ProgressEvent => {
+        //      this.setState({
+        //        loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
+        //      })
+        //    },
+        //  })
+        //  .then(res => {
+        //    console.log(res.statusText)
+        //  })
+
+      }
 
   render() {
     return (
@@ -33,6 +64,10 @@ class App extends Component {
           <p>
             {this.state.data && this.state.data.id}
           </p>
+          <div className="App">
+            <input type="file" name="" id="" onChange={this.handleselectedFile} />
+            <button onClick={this.handleUpload}>Upload</button>
+          </div>
         </header>
       </div>
     );

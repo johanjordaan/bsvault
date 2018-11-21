@@ -6,7 +6,7 @@ var path = require('path');
 exports.create = function(event, context, callback) {
   var result = {
     statusCode: 200,
-    body: JSON.stringify(['Hallo','world']),
+    body: JSON.stringify({event}),
     headers: {
      'Access-Control-Allow-Origin': '*',
      'Access-Control-Allow-Credentials': true,
