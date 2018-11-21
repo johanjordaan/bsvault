@@ -18,6 +18,11 @@ Parameters:
 #       Enabled: true
 #       Type: Canary10Percent5Minutes
 
+Globals:
+  Api:
+    EndpointConfiguration: REGIONAL
+    Cors: "'*'"
+
 Resources:
   CreateRoster:
     Type: AWS::Serverless::Function
