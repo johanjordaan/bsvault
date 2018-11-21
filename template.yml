@@ -28,8 +28,6 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: bsvault.net
-      MetricsConfigurations:
-        - Id: EntireBucket
     DeletionPolicy: Retain
 
   CreateRoster:
