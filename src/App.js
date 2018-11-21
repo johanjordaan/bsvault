@@ -42,18 +42,6 @@ class App extends Component {
 
         console.log(this.state.selectedFile)
         alert(this.state.selectedFile,this.state.selectedFile.name)
-        //axios
-        //  .post(endpoint, data, {
-        //    onUploadProgress: ProgressEvent => {
-        //      this.setState({
-        //        loaded: (ProgressEvent.loaded / ProgressEvent.total*100),
-        //      })
-        //    },
-        //  })
-        //  .then(res => {
-        //    console.log(res.statusText)
-        //  })
-
       }
 
   render() {
@@ -62,7 +50,7 @@ class App extends Component {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
-            {this.state.data && this.state.data.id}
+            {this.state.data && this.state.data.uuid}
           </p>
           <div className="App">
             <input type="file" name="" id="" onChange={this.handleselectedFile} />
