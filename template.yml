@@ -39,7 +39,6 @@ Resources:
           Properties:
             Path: /roster
             Method: post
-            cors: true
 
   ViewRoster:
     Type: AWS::Serverless::Function
@@ -56,4 +55,3 @@ Resources:
           Properties:
             Path: /roster/{id}
             Method: get
-            cors: true
