@@ -1,6 +1,17 @@
 'use strict';
 
 var test = require('unit.js');
+var roster = require('../api/roster.js');
+
+
+describe('roster upload',()=>{
+
+  it('')
+
+})
+
+
+
 //var index = require('../api/index.js');
 
 describe('Tests index', function() {
