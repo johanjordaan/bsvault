@@ -24,12 +24,6 @@ Globals:
     Cors: "'*'"
 
 Resources:
-  S3Bucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: bsvault.net
-    DeletionPolicy: Retain
-
   CreateRoster:
     Type: AWS::Serverless::Function
     Properties:
