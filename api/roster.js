@@ -28,6 +28,23 @@ exports.create = function(event, context, callback) {
 
 };
 
-exports.view = function(event, context, callback) {
-  callback(null,  utils.okResponse({all:"ok",id:event.pathParameters.id}));
-};
+exports.download = (event, context, callback) =>  {
+  const id = event.pathParameters.id
+  const s3Params = {
+    Bucket: 'bsvault.net',
+    Key: id,
+  }
+
+  s3.getObject(s3Params, (error, data) => {
+    if(error) {
+      callback(null, utils.errorResponse(500,error));
+    } else {
+      callback(null, utils.downloadResponse('application/octet-stream',id,data));
+    }
+  }
+}
+
+
+exports.view = (event, context, callback) => {
+  callback(null,  utils.okResponse({all:"ok",id:event.pathParameters.id}))
+}

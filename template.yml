@@ -40,6 +40,22 @@ Resources:
             Path: /roster
             Method: post
 
+  DownloadRoster:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: roster.download
+      CodeUri: ./api
+      Runtime: nodejs8.10
+      Role:
+        Fn::ImportValue:
+          !Join ['-', [!Ref 'ProjectId', !Ref 'AWS::Region', 'LambdaTrustRole']]
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /roster/{id}/download
+            Method: get
+
   ViewRoster:
     Type: AWS::Serverless::Function
     Properties:

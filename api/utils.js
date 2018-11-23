@@ -29,8 +29,9 @@ const parseMultipartBody = (event) => {
 const standardHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Credentials': true,
-  'content-type': 'application/json',
+  'Content-Type': 'application/json',
 }
+
 
 const okResponse = (returnValue) => {
   return {
@@ -48,9 +49,25 @@ const errorResponse = (statusCode,message) => {
   }
 }
 
+const downloadResponse = (type,name,data) => {
+  const headers = {
+    ...standardHeaders,
+    'Content-Type': type,
+    'Content-Disposition': `attachment; filename="${name}"`
+  }
+
+  return {
+    statusCode: 200,
+    body: data,
+    headers,
+  }
+
+}
+
 
 module.exports = {
   okResponse,
   errorResponse,
+  downloadResponse,
   parseMultipartBody,
 }

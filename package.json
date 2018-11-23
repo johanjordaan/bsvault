@@ -10,11 +10,13 @@
     },
     "dependencies": {
         "aws-sdk": "^2.361.0",
+        "bsvaultapi": "file:api",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "react-scripts": "2.1.1"
     },
     "scripts": {
+        "install": "cd ./api; npm install; cd ..",
         "test": "mocha --recursive tests",
         "start": "react-scripts start",
         "build": "react-scripts build",

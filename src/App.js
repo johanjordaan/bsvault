@@ -6,7 +6,7 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      data: null,
+      data: {},
     }
   }
 
@@ -36,14 +36,23 @@ class App extends Component {
     })
   }
 
+  renderDownloadLink(id) {
+    if(id === undefined) return null
+    if(id === null) return null
+
+    return(
+      <p>
+        <a href=`https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`>{id}</a>
+      </p>
+    )
+  }
+
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            {this.state.data && this.state.data.uuid}
-          </p>
+          {renderDownloadLink(this.state.data.uuid)}
           <div className="App">
             <input type="file" name="" id="" onChange={this.handleselectedFile} />
             <button onClick={this.handleUpload}>Upload</button>
