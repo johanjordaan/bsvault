@@ -51,7 +51,8 @@ const errorResponse = (statusCode,message) => {
 
 const downloadResponse = (type,name,data) => {
   const headers = {
-    ...standardHeaders,
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Credentials': true,
     'Content-Type': type,
     'Content-Disposition': `attachment; filename="${name}"`
   }
