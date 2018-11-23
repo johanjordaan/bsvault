@@ -41,7 +41,7 @@ exports.download = (event, context, callback) =>  {
     } else {
       callback(null, utils.downloadResponse('application/octet-stream',id,data));
     }
-  }
+  })
 }
 
 
