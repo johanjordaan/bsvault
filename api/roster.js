@@ -20,20 +20,14 @@ exports.create = function(event, context, callback) {
 
   s3.putObject(s3Params,(error,data)=>{
     if(error) {
-      callback(null, util.errorResponse(500,error));
+      callback(null, utils.errorResponse(500,error));
     } else {
-      callback(null, util.okResponse({uuid:newId}));
+      callback(null, utils.okResponse({uuid:newId}));
     }
   })
 
 };
 
 exports.view = function(event, context, callback) {
-  var result = {
-    statusCode: 200,
-    body: JSON.stringify({all:"ok",id:event.pathParameters.id}),
-    headers:utils.standardHeaders,
-  };
-
-  callback(null, result);
+  callback(null,  utils.okResponse({all:"ok",id:event.pathParameters.id}));
 };
