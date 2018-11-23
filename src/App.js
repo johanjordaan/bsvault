@@ -40,9 +40,10 @@ class App extends Component {
     if(id === undefined) return null
     if(id === null) return null
 
+    const link = `https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`
     return(
       <p>
-        <a href=`https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`>{id}</a>
+        <a href="{link}">{id}</a>
       </p>
     )
   }
@@ -52,7 +53,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          {renderDownloadLink(this.state.data.uuid)}
+          {this.renderDownloadLink(this.state.data.uuid)}
           <div className="App">
             <input type="file" name="" id="" onChange={this.handleselectedFile} />
             <button onClick={this.handleUpload}>Upload</button>
