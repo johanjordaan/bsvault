@@ -11,38 +11,30 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch('https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/xxx')
-     .then(response => response.json())
-     .then(data => this.setState({ data }))
   }
 
+  handleselectedFile = (event) => {
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    })
+  }
 
-  handleselectedFile = event => {
-      this.setState({
-        selectedFile: event.target.files[0],
-        loaded: 0,
-      })
-    }
+  handleUpload = () => {
+    const data = new FormData()
+    data.append('file', this.state.selectedFile, this.state.selectedFile.name)
 
-    handleUpload = () => {
-        const data = new FormData()
-        data.append('file', this.state.selectedFile, this.state.selectedFile.name)
-
-        fetch('https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster',{
-          method:'POST',
-          body:data
-        })
-          .then(response => response.json())
-          .then(data => this.setState({ data }))
-          .catch(err=>{
-            console.log(err)
-            alert(err)
-          })
-
-
-        console.log(this.state.selectedFile)
-        alert(this.state.selectedFile,this.state.selectedFile.name)
-      }
+    fetch('https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster',{
+      method:'POST',
+      body:data
+    })
+    .then(response => response.json())
+    .then(data => this.setState({ data }))
+    .catch(err=>{
+      console.log(err)
+      alert(err)
+    })
+  }
 
   render() {
     return (
@@ -58,8 +50,8 @@ class App extends Component {
           </div>
         </header>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

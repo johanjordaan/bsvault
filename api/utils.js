@@ -32,7 +32,25 @@ const standardHeaders = {
   'content-type': 'application/json',
 }
 
+const okResponse = (returnValue) => {
+  return {
+    statusCode: 200,
+    body: JSON.stringify(returnValue),
+    headers:standardHeaders,
+  }
+}
+
+const errorResponse = (statusCode,message) => {
+  return {
+    statusCode,
+    body: JSON.stringify({message}),
+    headers:standardHeaders,
+  }
+}
+
+
 module.exports = {
-  standardHeaders,
+  okResponse,
+  errorResponse,
   parseMultipartBody,
 }

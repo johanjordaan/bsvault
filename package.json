@@ -9,6 +9,7 @@
         "uuid": "^3.3.2"
     },
     "dependencies": {
+        "aws-sdk": "^2.361.0",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
         "react-scripts": "2.1.1"
