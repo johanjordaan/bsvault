@@ -36,7 +36,7 @@ exports.download = (event, context, callback) =>  {
   }
 
   const url = s3.getSignedUrl('getObject', s3Params)
-  callback(null, okResponse({url}));
+  callback(null, utils.okResponse({url}));
 }
 
 
