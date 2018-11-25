@@ -43,7 +43,7 @@ class App extends Component {
     const link = `https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`
     return(
       <p>
-        <a href="{link}">{id}</a>
+        <a href={link}>{id}</a>
       </p>
     )
   }

@@ -56,7 +56,7 @@ const downloadResponse = (type,name,data) => {
     'Content-Type': type,
     'Content-Disposition': `attachment; filename="${name}"`
   }
-
+  console.log(type,name,data)
   return {
     statusCode: 200,
     body: data,
