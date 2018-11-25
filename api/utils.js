@@ -49,26 +49,9 @@ const errorResponse = (statusCode,message) => {
   }
 }
 
-const downloadResponse = (type,name,data) => {
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Credentials': true,
-    'Content-Type': type,
-    'Content-Disposition': `attachment; filename="${name}"`
-  }
-  console.log(type,name,data)
-  return {
-    statusCode: 200,
-    body: data,
-    headers,
-  }
-
-}
-
 
 module.exports = {
   okResponse,
   errorResponse,
-  downloadResponse,
   parseMultipartBody,
 }

@@ -22,7 +22,7 @@ exports.create = function(event, context, callback) {
     if(error) {
       callback(null, utils.errorResponse(500,error));
     } else {
-      callback(null, utils.okResponse({uuid:newId}));
+      callback(null, utils.okResponse({id:newId}));
     }
   })
 
@@ -35,13 +35,8 @@ exports.download = (event, context, callback) =>  {
     Key: id,
   }
 
-  s3.getObject(s3Params, (error, data) => {
-    if(error) {
-      callback(null, utils.errorResponse(500,error));
-    } else {
-      callback(null, utils.downloadResponse('application/octet-stream',id,data));
-    }
-  })
+  const url = s3.getSignedUrl('getObject', s3Params)
+  callback(null, okResponse({url}));
 }
 
 

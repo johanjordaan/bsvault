@@ -7,6 +7,7 @@ class App extends Component {
     super(props)
     this.state = {
       data: {},
+      url: null,
     }
   }
 
@@ -16,7 +17,6 @@ class App extends Component {
   handleselectedFile = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loaded: 0,
     })
   }
 
@@ -28,22 +28,29 @@ class App extends Component {
       method:'POST',
       body:data
     })
-    .then(response => response.json())
-    .then(data => this.setState({ data }))
-    .catch(err=>{
+    .then(response => {
+      return response.json()
+    }).then(data => {
+      const id = data.id
+      this.setState({ data })
+      return fetch(`https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`)
+    }).then(response => {
+      return response.json()
+    }).then(data => {
+      this.setState({ url:data.url })
+    }).catch(err=>{
       console.log(err)
       alert(err)
     })
   }
 
-  renderDownloadLink(id) {
-    if(id === undefined) return null
-    if(id === null) return null
+  renderDownloadLink(id,url) {
+    if(url === undefined) return null
+    if(url === null) return null
 
-    const link = `https://m1m6pc92qi.execute-api.ap-southeast-2.amazonaws.com/Prod/roster/${id}/download`
     return(
       <p>
-        <a href={link}>{id}</a>
+        <a href={url}>{id}</a>
       </p>
     )
   }
@@ -53,7 +60,7 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          {this.renderDownloadLink(this.state.data.uuid)}
+          {this.renderDownloadLink(this.state.data.id,this.state.url)}
           <div className="App">
             <input type="file" name="" id="" onChange={this.handleselectedFile} />
             <button onClick={this.handleUpload}>Upload</button>
