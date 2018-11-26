@@ -6,7 +6,8 @@
     "devDependencies": {
         "mocha": "5.0.0",
         "unit.js": "2.0.0",
-        "uuid": "^3.3.2"
+        "uuid": "^3.3.2",
+        "adm-zip": "^0.4.13"
     },
     "dependencies": {
         "aws-sdk": "^2.361.0",
