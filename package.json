@@ -19,7 +19,7 @@
         "react-scripts": "2.1.1"
     },
     "scripts": {
-        "install": "cd ./api; npm install; cd ..",
+        "apiinstall": "cd ./api; npm install; cd ..",
         "test": "mocha --recursive tests",
         "start": "react-scripts start",
         "build": "react-scripts build",
