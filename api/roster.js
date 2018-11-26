@@ -12,12 +12,10 @@ exports.create = function(event, context, callback) {
   const newId = uuid.v4()
   const bodyParts = utils.parseMultipartBody(event)
 
-  console.log(bodyParts)
-
   const s3Params =  {
     Bucket: 'bsvault.net',
     Key: newId,
-    Body: bodyParts.content
+    Body:  bodyParts.file.content,
   }
 
   s3.putObject(s3Params,(error,data)=>{

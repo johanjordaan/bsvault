@@ -23,8 +23,8 @@ describe('utils',()=>{
     const fileBuffer = fs.readFileSync(fileName('1000pt Khorne Vanguard.rosz'))
     it('should unzip and parse the buffer',()=>{
 
-      utils.unzipAndParseRosz(fileBuffer)
-      console.log(fileBuffer)
+      //utils.unzipAndParseRosz(fileBuffer)
+      //console.log(fileBuffer)
     })
   })
 })
