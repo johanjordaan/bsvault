@@ -4,11 +4,11 @@ var test = require('unit.js');
 var roster = require('../api/roster.js');
 
 
-describe('roster upload',()=>{
-
-  it('')
-
-})
+//describe('roster upload',()=>{
+//
+//  it('')
+//
+//})
 
 
 

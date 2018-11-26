@@ -19,7 +19,7 @@ exports.create = function(event, context, callback) {
     Body:  bodyParts.file.content,
   }
 
-  const rosterData = unzipAndParseRosz(bodyParts.file.content)
+  const rosterData = utils.unzipAndParseRosz(bodyParts.file.content)
 
   s3.putObject(s3Params,(error,data)=>{
     if(error) {
@@ -48,7 +48,7 @@ exports.create = function(event, context, callback) {
           }))
         }
       })
-      
+
     }
   })
 };
