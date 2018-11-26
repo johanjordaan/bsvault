@@ -1,7 +1,5 @@
 'use strict';
 
-const { Readable } = require('stream');
-
 const AWS = require('aws-sdk')
 
 const uuid = require('uuid')
@@ -14,14 +12,12 @@ exports.create = function(event, context, callback) {
   const newId = uuid.v4()
   const bodyParts = utils.parseMultipartBody(event)
 
-  const stream = new Readable();
-  stream.push(bodyParts.content);
-  stream.push(null);
+  console.log(bodyParts)
 
   const s3Params =  {
     Bucket: 'bsvault.net',
     Key: newId,
-    Body: stream
+    Body: bodyParts.content
   }
 
   s3.putObject(s3Params,(error,data)=>{

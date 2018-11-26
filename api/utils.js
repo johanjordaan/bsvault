@@ -49,9 +49,21 @@ const errorResponse = (statusCode,message) => {
   }
 }
 
+const zlib = require('zlib')
+const unzipAndParseRosz = (buffer) => {
+  zlib.unzip(buffer, (err, buffer) => {
+    if (!err) {
+      console.log(buffer.toString());
+    } else {
+      console.log(err)
+    }
+  });
+}
+
 
 module.exports = {
   okResponse,
   errorResponse,
   parseMultipartBody,
+  unzipAndParseRosz,
 }
