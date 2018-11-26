@@ -21,7 +21,7 @@ exports.create = function(event, context, callback) {
 
   const rosterData = utils.unzipAndParseRosz(bodyParts.file.content)
 
-  s3.putObject(s3Params,(error,data)=>{
+  s3.putObject(s3Params,(error,data) => {
     if(error) {
       callback(null, utils.errorResponse(500,error));
     } else {
@@ -36,8 +36,8 @@ exports.create = function(event, context, callback) {
         }
       }
 
-      ddb.putItem(ddbParams, function(error, data) {
-        if (err) {
+      ddb.putItem(ddbParams, (error, data) => {
+        if (error) {
           callback(null, utils.errorResponse(500,error));
         } else {
           callback(null, utils.okResponse({
