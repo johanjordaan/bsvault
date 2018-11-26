@@ -6,6 +6,7 @@ const uuid = require('uuid')
 const utils = require('./utils')
 
 const s3 = new AWS.S3()
+const ddb = new AWS.DynamoDB({apiVersion: '2012-10-08'});
 
 exports.create = function(event, context, callback) {
 
@@ -18,14 +19,38 @@ exports.create = function(event, context, callback) {
     Body:  bodyParts.file.content,
   }
 
+  const rosterData = unzipAndParseRosz(bodyParts.file.content)
+
   s3.putObject(s3Params,(error,data)=>{
     if(error) {
       callback(null, utils.errorResponse(500,error));
     } else {
-      callback(null, utils.okResponse({id:newId}));
+
+      var ddbParams = {
+        TableName: 'bsvault_rosters',
+        Item: {
+          'id' : {N: newId},
+          'name' : {S: rosterData.roster.$.name},
+          'gameSystemName' : {S: rosterData.roster.$.gameSystemName},
+          'catalogueName' : {S: rosterData.roster.forces[0].force[0].$.catalogueName},
+        }
+      }
+
+      ddb.putItem(ddbParams, function(error, data) {
+        if (err) {
+          callback(null, utils.errorResponse(500,error));
+        } else {
+          callback(null, utils.okResponse({
+            id:newId,
+            'name' : rosterData.roster.$.name,
+            'gameSystemName' : rosterData.roster.$.gameSystemName,
+            'catalogueName' : rosterData.roster.forces[0].force[0].$.catalogueName,
+          }))
+        }
+      })
+      
     }
   })
-
 };
 
 exports.download = (event, context, callback) =>  {

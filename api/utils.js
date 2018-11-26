@@ -49,15 +49,20 @@ const errorResponse = (statusCode,message) => {
   }
 }
 
-const zlib = require('zlib')
+const AdmZip = require('adm-zip')
+const parseXmlString = require('xml2js').parseString
 const unzipAndParseRosz = (buffer) => {
-  zlib.unzip(buffer, (err, buffer) => {
-    if (!err) {
-      console.log(buffer.toString());
-    } else {
-      console.log(err)
-    }
-  });
+  return new Promise((resolve, reject)=>{
+    const admZip = new AdmZip(buffer)
+    const zipEntries = admZip.getEntries()
+    const roster = admZip.readAsText(zipEntries[0])
+      parseXmlString(roster, (err, result) => {
+        if(err) {
+          reject(err)
+        }
+        resolve(result)
+    })
+  })
 }
 
 

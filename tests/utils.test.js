@@ -21,10 +21,20 @@ describe('utils',()=>{
 
   describe('unzipAndParseRosz',()=>{
     const fileBuffer = fs.readFileSync(fileName('1000pt Khorne Vanguard.rosz'))
-    it('should unzip and parse the buffer',()=>{
+    it('should unzip and parse the buffer',(done)=>{
 
-      //utils.unzipAndParseRosz(fileBuffer)
-      //console.log(fileBuffer)
+      utils.unzipAndParseRosz(fileBuffer).then((result)=>{
+        //console.log(JSON.stringify(result,null,2))
+        console.log(result.roster.$.name)
+        console.log(result.roster.$.gameSystemName)
+        console.log(result.roster.forces[0].force[0].$.name)
+        console.log(result.roster.forces[0].force[0].$.catalogueName)
+
+        done()
+      }).catch((error)=>{
+        console.log(error)
+        cone(err)
+      })
     })
   })
 })
