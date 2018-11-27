@@ -21,6 +21,11 @@ exports.create = function(event, context, callback) {
 
   const rosterData = utils.unzipAndParseRosz(bodyParts.file.content)
 
+  console.log(rosterData)
+  if(rosterData === null) callback(null, utils.errorResponse(500,"not a roster??"))
+  if(rosterData === undefined) callback(null, utils.errorResponse(500,"not a roster??"))
+
+
   s3.putObject(s3Params,(error,data) => {
     if(error) {
       callback(null, utils.errorResponse(500,error));
@@ -38,7 +43,7 @@ exports.create = function(event, context, callback) {
 
       ddb.putItem(ddbParams, (error, data) => {
         if (error) {
-          callback(null, utils.errorResponse(500,error));
+          callback(null, utils.errorResponse(500,error))
         } else {
           callback(null, utils.okResponse({
             id:newId,
