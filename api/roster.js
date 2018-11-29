@@ -19,41 +19,46 @@ exports.create = function(event, context, callback) {
     Body:  bodyParts.file.content,
   }
 
-  const rosterData = utils.unzipAndParseRosz(bodyParts.file.content)
-
-  console.log(rosterData)
-  if(rosterData === null) callback(null, utils.errorResponse(500,"not a roster??"))
-  if(rosterData === undefined) callback(null, utils.errorResponse(500,"not a roster??"))
-
-
   s3.putObject(s3Params,(error,data) => {
     if(error) {
       callback(null, utils.errorResponse(500,error));
     } else {
 
-      var ddbParams = {
-        TableName: 'bsvault_rosters',
-        Item: {
-          'id' : {N: newId},
-          'name' : {S: rosterData.roster.$.name},
-          'gameSystemName' : {S: rosterData.roster.$.gameSystemName},
-          'catalogueName' : {S: rosterData.roster.forces[0].force[0].$.catalogueName},
-        }
-      }
+      utils.unzipAndParseRosz(bodyParts.file.content).then((rolsterData)=>{
+        if(rosterData === null) callback(null, utils.errorResponse(500,"not a roster??"))
+        if(rosterData === undefined) callback(null, utils.errorResponse(500,"not a roster??"))
 
-      ddb.putItem(ddbParams, (error, data) => {
-        if (error) {
-          callback(null, utils.errorResponse(500,error))
-        } else {
-          callback(null, utils.okResponse({
-            id:newId,
-            'name' : rosterData.roster.$.name,
-            'gameSystemName' : rosterData.roster.$.gameSystemName,
-            'catalogueName' : rosterData.roster.forces[0].force[0].$.catalogueName,
-          }))
+        const units = utils.walkRoster(rosterData)
+
+        var ddbParams = {
+          TableName: 'bsvault_rosters',
+          Item: {
+            'id' : {N: newId},
+            'name' : {S: rosterData.roster.$.name},
+            'gameSystemName' : {S: rosterData.roster.$.gameSystemName},
+            'catalogueName' : {S: rosterData.roster.forces[0].force[0].$.catalogueName},
+            'units' : {S: units},
+          }
         }
+
+        ddb.putItem(ddbParams, (error, data) => {
+          if (error) {
+            callback(null, utils.errorResponse(500,JSON.stringify(error)))
+          } else {
+            callback(null, utils.okResponse({
+              id:newId,
+              'name' : rosterData.roster.$.name,
+              'gameSystemName' : rosterData.roster.$.gameSystemName,
+              'catalogueName' : rosterData.roster.forces[0].force[0].$.catalogueName,
+              'event': event,
+            }))
+          }
+        })
+
+
+      }).catch((error)=>{
+        callback(null, utils.errorResponse(500,JSON.stringify(error)))
       })
-
     }
   })
 };

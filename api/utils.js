@@ -1,3 +1,4 @@
+const _ = require('lodash')
 
 const parseMultipartBody = (event) => {
   const getValueIgnoringKeyCase = (object, key) => {
@@ -66,9 +67,62 @@ const unzipAndParseRosz = (buffer) => {
 }
 
 
+const walkRoster = (root) => {
+  const acc = []
+  let current = null
+  const _walk = (item,itemKey,parent,parentKey,path) => {
+    if(_.isObject(item)) {
+      _.each(_.keys(item),(key)=>{
+        _walk(item[key],key,item,itemKey,`${path}.${key}`)
+      })
+    } else if(_.isArray(item)) {
+      _.each(items,(listItem,i)=>{
+        _walk(listItem,i,item,itemKey,`${path}[${i}]`)
+      })
+    } else {
+
+      if(parent.name === 'Khorgorath') item = 'model'
+
+      if(parentKey === '$') {
+        if(itemKey === 'type' && item === 'unit') {
+          if(current !== null) {
+            if(current.modelName === undefined) {
+              current.modelName = current.unitName
+              current.unitCount = 1
+            }
+            acc.push(current)
+          }
+          current = {
+            unitName:parent.name
+          }
+        }
+        if(itemKey === 'type' && item === 'model') {
+          if(current !== null) {
+            let name = parent.name
+            const tokens = name.split(" ")
+            let count = 1
+            if(tokens.length >1) {
+              count = Number(tokens[0])
+              if(count === NaN) count = 1
+              name = name.replace(tokens[0],"").trim()
+            }
+
+            current.modelName = name
+            current.unitCount = count
+          }
+        }
+      }
+    }
+  }
+  _walk(root,null,null,null,'')
+  return acc
+}
+
+
 module.exports = {
   okResponse,
   errorResponse,
   parseMultipartBody,
   unzipAndParseRosz,
+  walkRoster,
 }

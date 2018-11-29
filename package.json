@@ -5,18 +5,18 @@
     "private": true,
     "devDependencies": {
         "mocha": "5.0.0",
-        "unit.js": "2.0.0",
         "xml2js": "^0.4.19",
         "adm-zip": "^0.4.13"
     },
     "dependencies": {
         "aws-sdk": "^2.361.0",
         "bsvaultapi": "file:api",
-        "uuid": "^3.3.2",
+        "chai": "^4.2.0",
         "lodash": "^4.17.11",
         "react": "^16.6.3",
         "react-dom": "^16.6.3",
-        "react-scripts": "2.1.1"
+        "react-scripts": "2.1.1",
+        "uuid": "^3.3.2"
     },
     "scripts": {
         "apiinstall": "cd ./api; npm install; cd ..",
