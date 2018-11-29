@@ -24,6 +24,13 @@ exports.create = function(event, context, callback) {
       callback(null, utils.errorResponse(500,error));
     } else {
 
+      callback(null, utils.okResponse({
+        id:newId,
+        'event': event,
+      }))
+      return;
+
+
       utils.unzipAndParseRosz(bodyParts.file.content).then((rolsterData)=>{
         if(rosterData === null) callback(null, utils.errorResponse(500,"not a roster??"))
         if(rosterData === undefined) callback(null, utils.errorResponse(500,"not a roster??"))
