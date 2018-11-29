@@ -15,13 +15,15 @@ const fileName = (name) =>{
 
 describe('utils',()=>{
   describe('parseMultipartBody',()=>{
-    const event = JSON.parse(fs.readFileSync(fileName('file_event.json'),'utf-8'))
+    const event = JSON.parse(fs.readFileSync(fileName('roz_file_event.json'),'utf-8'))
 
     it('should parse the event and extract the body parts',()=>{
-      const result = utils.parseMultipartBody(event)
+      const bodyParts = utils.parseMultipartBody(event)
 
-      should.exist(result.file)
-      result.file.type.should.equal('file')
+
+
+      should.exist(bodyParts.file)
+      bodyParts.file.type.should.equal('file')
       //test.number(result.statusCode).is(200);
       //test.string(result.body).contains('Congratulations');
       //test.value(result).hasHeader('content-type', 'text/html');
@@ -39,8 +41,8 @@ describe('utils',()=>{
 
 
 
-        const units = utils.walkRoster(result)
-        console.log(units)
+        //const units = utils.walkRoster(result)
+        //console.log(units)
         //console.log(result.roster.$.name)
         //console.log(result.roster.$.gameSystemName)
         //console.log(result.roster.forces[0].force[0].$.name)
